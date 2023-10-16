@@ -239,7 +239,7 @@ public class RapidResetDDoSUnitTestCase {
                 }
             });
 
-            latch.await(20000, TimeUnit.SECONDS);
+            latch.await(200, TimeUnit.SECONDS);
 
             System.out.println("TOM: How many: " + latch.getCount());
 
