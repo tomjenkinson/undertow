@@ -570,7 +570,7 @@
                 <module>coverage-report</module>
             </modules>
             <properties>
-                <jacoco.agent.argLine>${jacoco.activated.agent.argLine}</jacoco.agent.argLine>
+                <jacoco.agent.argLine></jacoco.agent.argLine>
             </properties>
             <build>
                 <plugins>
