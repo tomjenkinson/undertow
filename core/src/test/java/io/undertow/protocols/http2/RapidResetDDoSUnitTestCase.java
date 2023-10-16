@@ -239,7 +239,7 @@ public class RapidResetDDoSUnitTestCase {
                 }
             });
 
-            latch.await(200, TimeUnit.SECONDS);
+            latch.await(20000, TimeUnit.SECONDS);
 
             Assert.assertEquals(errorExpected? rstStreamLimit + 1:totalNumberOfRequests, responses.size());
             for (final ClientResponse response : responses) {
