@@ -57,7 +57,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest]
+        os: [macos-latest]
         module: [core]
         jdk: [11]
         openjdk_impl: [ temurin ]
