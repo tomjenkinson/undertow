@@ -283,6 +283,7 @@ public class RapidResetDDoSUnitTestCase {
                         new StringReadChannelListener(result.getConnection().getBufferPool()) {
 
                             @Override protected void stringDone(String string) {
+                                new RuntimeException().printStackTrace();
                                 result.getResponse().putAttachment(RESPONSE_BODY, string);
                                 latch.countDown();
                             }
