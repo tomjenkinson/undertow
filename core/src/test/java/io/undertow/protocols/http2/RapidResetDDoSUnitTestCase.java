@@ -188,6 +188,8 @@ public class RapidResetDDoSUnitTestCase {
         final List<ClientResponse> responses = new CopyOnWriteArrayList<>();
         final CountDownLatch latch = new CountDownLatch(totalNumberOfRequests);
 
+        System.out.println("Latch created" + latch);
+
         ServiceLoader<ClientProvider> providers = doPrivileged((PrivilegedAction<ServiceLoader<ClientProvider>>)
                 () -> ServiceLoader.load(ClientProvider.class, this.getClass().getClassLoader()));
         ClientProvider clientProvider = null;
@@ -241,7 +243,7 @@ public class RapidResetDDoSUnitTestCase {
 
             latch.await(200, TimeUnit.SECONDS);
 
-            System.out.println("TOM: How many: " + latch.getCount());
+            System.out.println("Latch finished" + latch);
 
             Assert.assertEquals(errorExpected? rstStreamLimit + 1:totalNumberOfRequests, responses.size());
             for (final ClientResponse response : responses) {
@@ -283,12 +285,14 @@ public class RapidResetDDoSUnitTestCase {
                         new StringReadChannelListener(result.getConnection().getBufferPool()) {
 
                             @Override protected void stringDone(String string) {
-                                new RuntimeException().printStackTrace();
+                                System.out.println(latch + " string done");
+
                                 result.getResponse().putAttachment(RESPONSE_BODY, string);
                                 latch.countDown();
                             }
 
                             @Override protected void error(IOException e) {
+                                System.out.println(latch + " error");
                                 e.printStackTrace();
                                 exception = e;
                                 latch.countDown();
@@ -297,6 +301,7 @@ public class RapidResetDDoSUnitTestCase {
                     }
 
                     @Override public void failed(IOException e) {
+                        System.out.println(latch + " failed");
                         e.printStackTrace();
                         exception = e;
                         latch.countDown();
@@ -309,6 +314,7 @@ public class RapidResetDDoSUnitTestCase {
                         result.getRequestChannel().resumeWrites();
                     }
                 } catch (IOException e) {
+                    System.out.println(latch + " ioe");
                     e.printStackTrace();
                     exception = e;
                     latch.countDown();
@@ -316,6 +322,8 @@ public class RapidResetDDoSUnitTestCase {
             }
 
             @Override public void failed(IOException e) {
+
+                System.out.println(latch + " failed2");
                 e.printStackTrace();
                 exception = e;
                 latch.countDown();
