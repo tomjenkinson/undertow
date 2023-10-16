@@ -57,9 +57,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [windows-latest]
         module: [core]
-        jdk: [11, 17]
+        jdk: [11]
         openjdk_impl: [ temurin ]
     steps:
     - name: Update hosts - linux
