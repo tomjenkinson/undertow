@@ -241,6 +241,8 @@ public class RapidResetDDoSUnitTestCase {
 
             latch.await(20000, TimeUnit.SECONDS);
 
+            System.out.println("TOM: How many: " + latch.getCount());
+
             Assert.assertEquals(errorExpected? rstStreamLimit + 1:totalNumberOfRequests, responses.size());
             for (final ClientResponse response : responses) {
                 final String responseBody = response.getAttachment(RESPONSE_BODY);
